@@ -149,7 +149,7 @@ class App:
         st.sidebar.markdown("*small print*:")
         st.sidebar.markdown("streamlitTemplate: "+infra.Version())
         for k, v in self.smalls.items():
-            if k in ['git', 'docker']:  # repositories
+            if k in ['github','gitlab', 'docker']:  # repositories
                 st.sidebar.markdown("["+k+" repository]("+v+")")
             else:
                 st.sidebar.markdown(v)

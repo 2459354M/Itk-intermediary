@@ -1,8 +1,9 @@
 from core.MultiApp import App
 
 smalls = {
-    'git': "https://github.com/kwraight/streamlitTemplateMulti",
-    'docker': "https://hub.docker.com/repository/docker/kwraight/multitemplate-app",
+    'github': "https://github.com/2459354M/Itk-intermediary",
+    'gitlab': "https://stgit.dcs.gla.ac.uk/team-project-h/2021/cs34/itk-reporting",
+    'docker': "https://hub.docker.com/repository/docker/2459354m/itk-production",
     'other': "otherstuff"
 }
 
