@@ -5,10 +5,16 @@ cwd = os.getcwd()
 pagesDir=cwd+"/corePages"
 import importlib
 sys.path.insert(1, pagesDir)
-pageFiles= sorted([f for f in os.listdir(pagesDir) if os.path.isfile(os.path.join(pagesDir, f)) and "page" in f])
-# print("found files in:",pagesDir)
-# print(pageFiles)
-# print("titles...")
+try:
+    pageFiles= sorted([f for f in os.listdir(pagesDir) if os.path.isfile(os.path.join(pagesDir, f)) and "page" in f])
+    # print("found files in:",pagesDir)
+    # print(pageFiles)
+    # print("titles...")
+except:
+    pagesDir = cwd+"/strlittemplate/corePages"
+    sys.path.insert(1,pagesDir)
+    pageFiles= sorted([f for f in os.listdir(pagesDir) if os.path.isfile(os.path.join(pagesDir, f)) and "page" in f])
+    
 print([x.title() for x in pageFiles])
 modules=[]
 modules += [importlib.import_module(p[:-3]) for p in pageFiles]
