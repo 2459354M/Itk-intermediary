@@ -1,4 +1,4 @@
-pandas_lite
 st_annotated_text==1.0.1
 streamlit==1.3.1
 plotly==5.3.1
+pandas
