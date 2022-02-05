@@ -1,5 +1,4 @@
 from numpy import indices
-from sklearn.metrics import recall_score
 import streamlit as st
 from core.ThemePage import Page
 import core.MultiApp as hub
