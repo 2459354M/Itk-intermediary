@@ -1,6 +1,5 @@
 import streamlit as st
 import corePages
-from util.getUserPages import userPages
 ###
 import os
 import sys
@@ -73,7 +72,7 @@ class App:
         except:
             print("could not parse date")
 
-
+from util.getUserPages import userPages
 #####################
 # main part
 #####################
