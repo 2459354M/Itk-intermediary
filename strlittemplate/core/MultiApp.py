@@ -57,7 +57,7 @@ class App:
         if data:
             return data
         else:
-            return false
+            return False
 
     def parse_date(datestr):
         try:
