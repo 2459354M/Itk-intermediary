@@ -54,10 +54,7 @@ class App:
         return [{k: [p().name for p in v]} for k, v in userPages.__all__.items()]
 
     def get_data():
-        if data:
-            return data
-        else:
-            return false
+        return data
 
     def parse_date(datestr):
         try:
