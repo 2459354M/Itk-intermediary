@@ -17,7 +17,8 @@ class Page1(Page):
     def main(self):
         pageDict = super().main()
         st.write("Basic Date Grab Example")
-        data = hub.App.get_data()
-        st.write(data[0]["stateTs"])
-        mydate = hub.App.parse_date(data[0]["stateTs"])
-        st.write(mydate)
+        if hub.App.get_data():
+            data = hub.App.get_data()
+            st.write(data[0]["stateTs"])
+            mydate = hub.App.parse_date(data[0]["stateTs"])
+            st.write(mydate)

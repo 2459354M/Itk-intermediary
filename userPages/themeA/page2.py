@@ -17,5 +17,6 @@ class Page2(Page):
 
     def main(self):
         pageDict = super().main()
-        data = hub.App.get_data()
-        st.write(data[0].keys())
+        if hub.App.get_data():
+            data = hub.App.get_data()
+            st.write(data[0].keys())
