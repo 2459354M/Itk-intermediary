@@ -21,7 +21,7 @@ class Page2(Page):
         data = hub.App.get_data()
         if hub.App.get_data():
             index = st.slider("Select point at which to disregard institution",
-                            min_value=0, max_value=10, value=5)
+                              min_value=0, max_value=10, value=5)
 
             inst_number = {}
             for i in data:
