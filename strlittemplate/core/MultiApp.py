@@ -11,7 +11,7 @@ import datetime
 #####################
 # useful functions
 #####################
-###test
+
 
 def toggle_debug():
     st.session_state.debug = not st.session_state.debug
@@ -62,7 +62,7 @@ class App:
     def parse_date(datestr):
         try:
             date = datestr[0:10].split("-")
-            time = datestr[12:19].split(":")
+            time = datestr[11:19].split(":")
             ms = int(datestr[-4:-1]) * 1000
             print(time)
             date = [int(i) for i in date]
