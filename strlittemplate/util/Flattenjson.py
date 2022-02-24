@@ -3,11 +3,17 @@ import json
 from isort import file
 
 def flattenjson(d):
-    if type(d) != dict:
-        raise ValueError('value d is not a dictionary, cannot flatten!')
-        return False
-    else:
+    if type(d) == dict:
         return start(d)
+    elif type(d) == list:
+        flatdatakeys = start(d[0])
+        for i in d:
+            attempt = flattenjson(i)
+            flatdatakeys = {x:flatdatakeys[x] for x in flatdatakeys if x in attempt}
+        return flatdatakeys
+    else:
+        raise ValueError("d is not a list or dictionary")
+        return false
 
 
 ##taken from https://stackoverflow.com/questions/51359783/how-to-flatten-multilevel-nested-json user: Bostjan
