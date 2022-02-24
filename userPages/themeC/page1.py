@@ -1,5 +1,4 @@
-from email.policy import default
-from matplotlib.pyplot import get
+import json
 import streamlit as st
 from core.ThemePage import Page
 import core.MultiApp as hub
@@ -7,6 +6,7 @@ from strlittemplate.util import Flattenjson, Value
 # custom
 import numpy as np
 import pandas as pd
+import plotly.express as px
 #####################
 # main part
 #####################
@@ -14,27 +14,43 @@ import pandas as pd
 
 class Page1(Page):
     def __init__(self):
-        super().__init__("pageC1", "Zeroth Page", ['nothing to report'])
+        super().__init__("Pie Charts", "Pie Charts", ['nothing to report'])
 
     def main(self):
         pageDict = super().main()
         data = hub.App.get_data()
         if data:
-            one_data = data[0]
+            # only keys which exist in all instances
+            flatdatakeys = Flattenjson.flattenjson(data)
+            if flatdatakeys is False:
+                raise ValueError("Cannot interpret data")
 
-            flatdatakeys = Flattenjson.flattenjson(one_data)
             stringkeys = list(flatdatakeys.keys())
             stringkeys.insert(0, "none")
 
             index1 = st.selectbox("Select y component:", stringkeys, index=0)
-            index2 = st.selectbox("Select x component:", stringkeys, index=0)
 
             value1, value2 = [], []
-            if index1 != "none" and index2 != "none":
-                for i in range(len(data)):
+            if index1 != "none":
+                for i in data:
                     value1.append(Value.getValue(
-                        data[i], flatdatakeys, index1))
-                    value2.append(Value.getValue(
-                        data[i], flatdatakeys, index2))
-                st.write(Value.count(value1))
-                st.write(Value.count(value2))
+                        i, flatdatakeys, index1))
+                index2 = st.selectbox(
+                    "Select x component:", stringkeys, index=0)
+                if index2 != "none":
+                    for i in data:
+                        value2.append(Value.getValue(
+                            i, flatdatakeys, index2))
+
+                value1 = Value.count(value1)
+                filter = st.slider("""Select point at which
+                                     to disregard component:""",
+                                   min_value=0,
+                                   max_value=max(value1.values()),
+                                   value=0)
+                value1 = {k: v for k, v in value1.items() if v > filter}
+                chart = px.pie(values=list(value1.values()),
+                               names=value1.keys())
+                st.plotly_chart(chart)
+
+                # sunburst still to come
