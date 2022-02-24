@@ -1,7 +1,5 @@
 import json
 
-from isort import file
-
 def flattenjson(d):
     if type(d) == dict:
         return start(d)
