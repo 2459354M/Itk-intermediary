@@ -20,5 +20,5 @@ class Page1(Page):
         if(hub.App.get_data()):
             data = hub.App.get_data()
             index = st.slider("Select Index to Display",
-                              min_value=0, max_value=len(data) - 1, value=0)
+                              min_value=0, max_value=len(data)-1, value=0)
             st.json(data[index])

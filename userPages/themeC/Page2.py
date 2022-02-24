@@ -1,7 +1,4 @@
-import itertools
 import json
-from re import S
-from git import TagReference
 import streamlit as st
 from core.ThemePage import Page
 import core.MultiApp as hub

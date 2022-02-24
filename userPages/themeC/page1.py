@@ -11,7 +11,6 @@ import plotly.express as px
 # main part
 #####################
 
-
 class Page1(Page):
     def __init__(self):
         super().__init__("Pie Charts", "Pie Charts", ['nothing to report'])
