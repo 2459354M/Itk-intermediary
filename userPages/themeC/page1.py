@@ -11,6 +11,7 @@ import plotly.express as px
 # main part
 #####################
 
+
 class Page1(Page):
     def __init__(self):
         super().__init__("Pie Charts", "Pie Charts", ['nothing to report'])
@@ -40,16 +41,22 @@ class Page1(Page):
                     for i in data:
                         value2.append(Value.getValue(
                             i, flatdatakeys, index2))
-
-                value1 = Value.count(value1)
-                filter = st.slider("""Select point at which
+                if index2 == "none":
+                    value1 = Value.count(value1)
+                    filter = st.slider("""Select point at which
                                      to disregard component:""",
-                                   min_value=0,
-                                   max_value=max(value1.values()),
-                                   value=0)
-                value1 = {k: v for k, v in value1.items() if v > filter}
-                chart = px.pie(values=list(value1.values()),
-                               names=value1.keys())
-                st.plotly_chart(chart)
+                                       min_value=0,
+                                       max_value=max(value1.values()),
+                                       value=0)
+                    value1 = {k: v for k, v in value1.items() if v > filter}
+                    chart = px.pie(values=list(value1.values()),
+                                   names=value1.keys())
+                    st.plotly_chart(chart)
+                elif index2 != "none":
+                    try:
+                        df = pd.DataFrame({"value1": value1, "value2": value2})
+                        chart = px.sunburst(df, path=["value2", "value1"])
+                        st.plotly_chart(chart)
 
-                # sunburst still to come
+                    except BaseException:
+                        st.write("invalid sunburst config")
