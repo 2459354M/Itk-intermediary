@@ -16,7 +16,7 @@ import pandas as pd
 
 class Page3(Page):
     def __init__(self):
-        super().__init__("pageB3", "Zeroth Page", ['nothing to report'])
+        super().__init__("Bar Chart", "Bar Chart", ['nothing to report'])
 
     def main(self):
         pageDict = super().main()

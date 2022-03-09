@@ -14,7 +14,10 @@ import plotly.express as px
 
 class Page1(Page):
     def __init__(self):
-        super().__init__("Pie Charts", "Pie Charts", ['nothing to report'])
+        super().__init__(
+            "Pie Charts and Sunburst",
+            "Pie Charts and Sunburst",
+            ['nothing to report'])
 
     def main(self):
         pageDict = super().main()
