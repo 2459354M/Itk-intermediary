@@ -1,4 +1,5 @@
 import pandas as pd
+import datetime
 
 def getValue(data,strlist,string):
     mylist = strlist[string]
@@ -64,3 +65,17 @@ def GetCountDF(value1, index1):
     })
 
     return value1,x_name
+
+def parse_date(datestr):
+    try:
+        date = datestr[0:10].split("-")
+        time = datestr[11:19].split(":")
+        ms = int(datestr[-4:-1]) * 1000
+        print(time)
+        date = [int(i) for i in date]
+        print(date)
+        time = [int(j) for j in time]
+        print(time)
+        return datetime.datetime(*date, *time, ms)
+    except:
+        print("could not parse date")

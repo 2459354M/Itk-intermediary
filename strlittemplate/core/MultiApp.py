@@ -59,20 +59,6 @@ class App:
         else:
             return False
 
-    def parse_date(datestr):
-        try:
-            date = datestr[0:10].split("-")
-            time = datestr[11:19].split(":")
-            ms = int(datestr[-4:-1]) * 1000
-            print(time)
-            date = [int(i) for i in date]
-            print(date)
-            time = [int(j) for j in time]
-            print(time)
-            return datetime.datetime(*date, *time, ms)
-        except:
-            print("could not parse date")
-
 
 #####################
 # main part
@@ -86,18 +72,18 @@ class App:
         st.sidebar.title(self.title)
 
         # sidebar
-        st.sidebar.title(":telescope: Kené's WebApp")
+        st.sidebar.title(":telescope: Itk-Production Reporting")
         st.sidebar.markdown("---")
-        theme = st.sidebar.radio("Select theme: ", tuple(self.themes))
+        theme = st.sidebar.radio("Select Chart Package: ", tuple(self.themes))
         # st.sidebar.markdown(self.init_pages(theme))
         self.init_pages(theme)
         #st.sidebar.markdown("themes: \n"+",".join(self.pages.keys()))
-        name = st.sidebar.radio("Select page: ", tuple(self.pages.keys()))
+        name = st.sidebar.radio("Select Chart: ", tuple(self.pages.keys()))
         st.sidebar.markdown("---")
 
         try:
             if st.session_state.debug:
-                st.sidebar.markdown("on page: "+name)
+                st.sidebar.markdown(name)
         except AttributeError:
             pass
 
