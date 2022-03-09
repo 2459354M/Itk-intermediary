@@ -1,3 +1,5 @@
+import pandas as pd
+
 def getValue(data,strlist,string):
     mylist = strlist[string]
     for i in mylist:
@@ -46,3 +48,19 @@ def getPairings(value1,value2):
         value.append(d[i])
 
     return mylist,source,target,value
+
+
+def GetCountDF(value1, index1):
+    value1 = count(value1)
+    x,y = [],[]
+
+    for key,value in value1.items():
+        x.append(key)
+        y.append(value)
+    x_name = str(index1)
+    value1 = pd.DataFrame({
+        x_name : x,
+        'count' : y
+    })
+
+    return value1,x_name
