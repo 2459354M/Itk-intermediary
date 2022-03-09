@@ -4,8 +4,6 @@ from core.ThemePage import Page
 import core.MultiApp as hub
 from strlittemplate.util import Flattenjson, Value
 # custom
-import numpy as np
-import pandas as pd
 import plotly.graph_objects as go
 #####################
 # main part
@@ -48,7 +46,7 @@ class Page2(Page):
                     data = [go.Sankey(node=dict(
                         pad=15,
                         thickness=20,
-                        line=dict(color="black", width=0.5),
+                        line=dict(color="black", width=0.2),
                         label=label,
                         color="blue"
                     ),
