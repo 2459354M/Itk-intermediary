@@ -1,7 +1,4 @@
 # standard
-from operator import index
-from re import X
-from turtle import width
 import streamlit as st
 from core.ThemePage import Page
 import core.MultiApp as hub
