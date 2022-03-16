@@ -2,7 +2,7 @@ import json
 import streamlit as st
 from core.ThemePage import Page
 import core.MultiApp as hub
-from strlittemplate.util import Flattenjson, Value
+from strlittemplate.util import Flattenjson, Value, ColourGenerator
 # custom
 import plotly.graph_objects as go
 #####################
@@ -26,7 +26,7 @@ class Page2(Page):
             stringkeys = list(flatdatakeys.keys())
             stringkeys.insert(0, "none")
 
-            index1 = st.selectbox("Select y component:", stringkeys, index=0)
+            index1 = st.selectbox("Select 1st component:", stringkeys, index=0)
 
             value1, value2 = [], []
             if index1 != "none":
@@ -34,7 +34,7 @@ class Page2(Page):
                     value1.append(Value.getValue(
                         i, flatdatakeys, index1))
                 index2 = st.selectbox(
-                    "Select x component:", stringkeys, index=0)
+                    "Select 2nd component:", stringkeys, index=0)
                 if index2 != "none":
                     for i in data:
                         value2.append(Value.getValue(
@@ -43,12 +43,18 @@ class Page2(Page):
                     label, source, target, value = Value.getPairings(
                         value1, value2)
 
+                    mc = st.checkbox("multicolour", value=False)
+                    if mc:
+                        colour = ColourGenerator.colour(label)
+                    else:
+                        colour = "blue"
+
                     data = [go.Sankey(node=dict(
                         pad=15,
                         thickness=20,
-                        line=dict(color="black", width=0.2),
+                        line=dict(color="black", width=0.01),
                         label=label,
-                        color="blue"
+                        color=colour
                     ),
                         link=dict(source=source, target=target, value=value))]
                     st.plotly_chart(data)

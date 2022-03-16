@@ -35,37 +35,42 @@ class Page3(Page):
                     value1.append(Value.getValue(
                         i, flatdatakeys, index1))
 
-                if index1 != "none":
-                    sort = st.checkbox("Sort?", value=False)
-                    swap_axis = st.checkbox("Swap axis?", value=False)
-                    value1, x_name = Value.GetCountDF(value1, index1)
-                    if sort:
-                        chart = alt.Chart(value1).mark_bar().encode(
-                            alt.X(x_name + ':N', sort='y'),
-                            alt.Y('count'))
-                        if swap_axis:
-                            chart = alt.Chart(value1).mark_bar().encode(
-                                alt.Y(x_name + ':N', sort='x'),
-                                alt.X('count'))
+                sort = st.checkbox("Sort?", value=False)
+                swap_axis = st.checkbox("Swap axis?", value=False)
+                value1, x_name = Value.GetCountDF(value1, index1)
 
-                    else:
+                if sort:
+                    reverse = st.checkbox("Reverse", value=False)
+                    toggle_reverse = ""
+                    if reverse:
+                        toggle_reverse = "-"
+                    chart = alt.Chart(value1).mark_bar().encode(
+                        alt.X(x_name + ':N', sort=toggle_reverse + 'y'),
+                        alt.Y('count'))
+                    if swap_axis:
                         chart = alt.Chart(value1).mark_bar().encode(
-                            x=x_name, y='count')
-                        if swap_axis:
-                            chart = alt.Chart(value1).mark_bar().encode(
-                                x='count', y=x_name)
+                            alt.Y(x_name + ':N', sort=toggle_reverse + 'x'),
+                            alt.X('count'))
 
+                else:
+                    chart = alt.Chart(value1).mark_bar().encode(
+                        x=x_name, y='count')
+                    if swap_axis:
+                        chart = alt.Chart(value1).mark_bar().encode(
+                            x='count', y=x_name)
+
+                # red line to indicate mean
+                rule = alt.Chart(value1).mark_rule(color='red').encode(
+                    y='mean(count):Q'
+                )
+
+                if swap_axis:
                     rule = alt.Chart(value1).mark_rule(color='red').encode(
-                        y='mean(count):Q'
+                        x='mean(count):Q'
                     )
 
-                    if swap_axis:
-                        rule = alt.Chart(value1).mark_rule(color='red').encode(
-                            x='mean(count):Q'
-                        )
-
-                    st.altair_chart(
-                        (chart +
-                         rule).properties(
-                            width=600,
-                            height=500))
+                st.altair_chart(
+                    (chart +
+                        rule).properties(
+                        width=600,
+                        height=500))

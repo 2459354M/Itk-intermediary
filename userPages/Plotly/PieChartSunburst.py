@@ -30,7 +30,8 @@ class Page1(Page):
             stringkeys = list(flatdatakeys.keys())
             stringkeys.insert(0, "none")
 
-            index1 = st.selectbox("Select y component:", stringkeys, index=0)
+            index1 = st.selectbox(
+                "Select Pie Chart component:", stringkeys, index=0)
 
             value1, value2 = [], []
             if index1 != "none":
@@ -38,7 +39,8 @@ class Page1(Page):
                     value1.append(Value.getValue(
                         i, flatdatakeys, index1))
                 index2 = st.selectbox(
-                    "Select x component:", stringkeys, index=0)
+                        "Select additional component for Sunburst:",
+                        stringkeys, index=0)
                 if index2 != "none":
                     for i in data:
                         value2.append(Value.getValue(

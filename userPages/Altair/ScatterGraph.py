@@ -4,8 +4,7 @@ from core.ThemePage import Page
 import core.MultiApp as hub
 # custom
 import altair as alt
-import pandas as pd
-from strlittemplate.util import Flattenjson, Value
+from strlittemplate.util import Dat_Parse
 #####################
 # main part
 #####################
@@ -18,44 +17,21 @@ class Page2(Page):
 
     def main(self):
         pageDict = super().main()
-        data = hub.App.get_data()
-        if data:
-            # only keys which exist in all instances
-            flatdatakeys = Flattenjson.flattenjson(data)
-            if flatdatakeys is False:
-                raise ValueError("Cannot interpret data")
+        myfile = st.file_uploader("upload dat file")
+        if myfile is not None:
+            data, names = Dat_Parse.parse(myfile)
+            graphscale = st.selectbox(
+                "Scale:", ['linear', 'log', 'symlog'], index=0)
+            colour_variable = st.selectbox(
+                "Variable for colour:", names, index=0)
+            chart = alt.Chart(data).mark_point().encode(
+                alt.Y(names[1], scale=alt.Scale(type=graphscale)),
+                x=names[0],
+                color=colour_variable,
+                tooltip=names
+            ).interactive()
 
-            stringkeys = list(flatdatakeys.keys())
-            stringkeys.insert(0, "none")
-
-            index1 = st.selectbox("Select a component:", stringkeys, index=0)
-
-            value1, value2 = [], []
-            if index1 != "none":
-                for i in data:
-                    value1.append(Value.getValue(
-                        i, flatdatakeys, index1))
-                value1 = Value.count(value1)
-                x, y = [], []
-                for key, value in value1.items():
-                    x.append(key)
-                    y.append(value)
-
-                source = pd.DataFrame({index1: x, 'count': y})
-                try:
-                    chart = alt.Chart(source.reset_index()).mark_circle(
-                        size=60).encode(
-                        x='index',
-                        y='count',
-                        color=index1
-                    ).interactive()
-
-                    rule = alt.Chart(value1).mark_rule(color='red').encode(
-                        y='mean(count):Q'
-                    )
-
-                    st.altair_chart(chart.properties(
-                        width=600,
-                        height=500))
-                except BaseException:
-                    st.write("Cannot generate scatter graph")
+            st.altair_chart(
+                (chart).properties(
+                    width=600,
+                    height=500))
