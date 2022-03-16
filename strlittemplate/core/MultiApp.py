@@ -40,10 +40,11 @@ class App:
             self.pages = dict()
         allPages = []
         allPages = corePages.__all__.copy()
-        if theme != None:
+        if theme is not None:
             allPages += userPages.__all__[theme].copy()
         # order pages if required
-        # allPages.insert(0, allPages.pop([p().name for p in allPages.index("NAME")))
+        # allPages.insert(0, allPages.pop([p().name for p in
+        # allPages.index("NAME")))
         allPages.append(allPages.pop(
             [p().name for p in allPages].index("Broom Cupboard")))
         for page in allPages:
@@ -51,7 +52,8 @@ class App:
             self.pages[p.name] = p
         # return {theme:[len(allPages),len(corePages.__all__),len(userPages.__all__),len(self.pages.keys())]}
         # return {theme:[p().name for p in allPages]} #self.pages.keys()}
-        return [{k: [p().name for p in v]} for k, v in userPages.__all__.items()]
+        return [{k: [p().name for p in v]}
+                for k, v in userPages.__all__.items()]
 
     def get_data():
         if data:
@@ -92,12 +94,12 @@ class App:
             if name in st.session_state[theme].keys():
                 if st.session_state.debug:
                     st.sidebar.markdown(
-                        "session_state \'"+theme+"."+name+"\' OK")
+                        "session_state \'" + theme + "." + name + "\' OK")
             else:
                 st.session_state[theme][name] = {}
                 if st.session_state.debug:
                     st.sidebar.markdown(
-                        "session_state \'"+theme+"."+name+"\' defined")
+                        "session_state \'" + theme + "." + name + "\' defined")
         except KeyError:
             st.session_state[theme] = {name: {}}
 
@@ -108,8 +110,8 @@ class App:
         try:
             data = data.read()
             data = json.loads((data.decode('utf8', 'strict')))
-        except:
-            print("data not read yet")
+        except BaseException:
+            pass
 
         if st.sidebar.button("State Summary"):
             # st.write(dir(state))
@@ -136,10 +138,10 @@ class App:
         # small print
         st.sidebar.markdown("---")
         st.sidebar.markdown("*small print*:")
-        st.sidebar.markdown("streamlitTemplate: "+infra.Version())
+        st.sidebar.markdown("streamlitTemplate: " + infra.Version())
         for k, v in self.smalls.items():
-            if k in ['github','gitlab', 'docker']:  # repositories
-                st.sidebar.markdown("["+k+" repository]("+v+")")
+            if k in ['github', 'gitlab', 'docker']:  # repositories
+                st.sidebar.markdown("[" + k + " repository](" + v + ")")
             else:
                 st.sidebar.markdown(v)
 

@@ -3,7 +3,7 @@ import importlib
 import sys
 import os
 cwd = os.getcwd()
-pagesDir = cwd+"/corePages"
+pagesDir = cwd + "/corePages"
 sys.path.insert(1, pagesDir)
 try:
     pageFiles = sorted([f for f in os.listdir(pagesDir) if os.path.isfile(
@@ -11,8 +11,8 @@ try:
     # print("found files in:",pagesDir)
     # print(pageFiles)
     # print("titles...")
-except:
-    pagesDir = cwd+"/strlittemplate/corePages"
+except BaseException:
+    pagesDir = cwd + "/strlittemplate/corePages"
     sys.path.insert(1, pagesDir)
     pageFiles = sorted([f for f in os.listdir(pagesDir) if os.path.isfile(
         os.path.join(pagesDir, f)) and "page" in f])

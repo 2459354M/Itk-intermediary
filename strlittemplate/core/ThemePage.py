@@ -32,12 +32,12 @@ class Page:
 
         # check session state attribute, stop if none
         for key in st.session_state.keys():
-            if type(st.session_state[key]) != type({}):
+            if not isinstance(st.session_state[key], type({})):
                 continue
             if self.name in st.session_state[key].keys():
                 if st.session_state.debug:
-                    st.write("st.session_state \'"+key +
-                             "."+self.name+"\' defined")
+                    st.write("st.session_state \'" + key +
+                             "." + self.name + "\' defined")
                 return st.session_state[key][self.name]
         else:
             st.write("no session state attribute defined!")

@@ -18,7 +18,7 @@ import importlib
 
 def ReadRequirements():
     try:
-        with open(os.getcwd()+"/requirements.txt") as req:
+        with open(os.getcwd() + "/requirements.txt") as req:
             st.write("From requirements...")
             for line in req.readlines():
                 st.write(line.strip())
@@ -29,9 +29,9 @@ def ReadRequirements():
 def CheckModule(name):
     try:
         i = importlib.import_module(name)
-        st.write("module '"+name+"' version:", i.__version__)
+        st.write("module '" + name + "' version:", i.__version__)
     except ModuleNotFoundError:
-        st.write("module '"+name+"' not found")
+        st.write("module '" + name + "' not found")
 
 
 def display_state_values():
@@ -60,8 +60,8 @@ def display_state_values():
             continue
         st.write(f"**{mk}** information")
         infra.ToggleButton(
-            st.session_state['Broom Cupboard'], 'show_'+mk, f"Show *{mk}* information")
-        if st.session_state['Broom Cupboard']['show_'+mk]:
+            st.session_state['Broom Cupboard'], 'show_' + mk, f"Show *{mk}* information")
+        if st.session_state['Broom Cupboard']['show_' + mk]:
             st.write(st.session_state[mk])
 
 

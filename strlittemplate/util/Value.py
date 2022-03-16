@@ -1,18 +1,21 @@
 import pandas as pd
 import datetime
 
-def getValue(data,strlist,string):
+# goes through a list to recursively obtain the value in a dictionary
+
+
+def getValue(data, strlist, string):
     mylist = strlist[string]
     for i in mylist:
-        try: ## case if value is part of list
+        try:  # case if value is part of list
             i = int(i)
-        except:
+        except BaseException:
             pass
 
         try:
             data = data[i]
-        except:
-            ## key selected by user may only have values in some instances
+        except BaseException:
+            # key selected by user may only have values in some instances
             return None
     return data
 
@@ -24,10 +27,14 @@ def count(l):
             d[i] += 1
         else:
             d[i] = 1
-            
+
     return d
 
-def getPairings(value1,value2):
+# returns a dictionary which maps 2 values to how many times those values
+# occur in a single instance
+
+
+def getPairings(value1, value2):
     mylist = value1.copy()
     mylist.extend(value2)
     mylist = list(set(mylist))
@@ -48,23 +55,26 @@ def getPairings(value1,value2):
         target.append(i[1])
         value.append(d[i])
 
-    return mylist,source,target,value
+    return mylist, source, target, value
+
+# counts occurances and returns DataFrame
 
 
 def GetCountDF(value1, index1):
     value1 = count(value1)
-    x,y = [],[]
+    x, y = [], []
 
-    for key,value in value1.items():
+    for key, value in value1.items():
         x.append(key)
         y.append(value)
     x_name = str(index1)
     value1 = pd.DataFrame({
-        x_name : x,
-        'count' : y
+        x_name: x,
+        'count': y
     })
 
-    return value1,x_name
+    return value1, x_name
+
 
 def parse_date(datestr):
     try:
@@ -77,5 +87,5 @@ def parse_date(datestr):
         time = [int(j) for j in time]
         print(time)
         return datetime.datetime(*date, *time, ms)
-    except:
+    except BaseException:
         print("could not parse date")

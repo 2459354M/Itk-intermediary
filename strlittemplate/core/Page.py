@@ -34,7 +34,7 @@ class Page:
         # st.write([k for k in state.keys() if k[:1] != '_'])
         if self.name in [k for k in st.session_state.keys() if k[:1] != '_']:
             if st.session_state.debug:
-                st.write("st.session_state[\'"+self.name+"\'] defined")
+                st.write("st.session_state[\'" + self.name + "\'] defined")
         else:
             st.session_state.__setattr__(self.name, {})
 

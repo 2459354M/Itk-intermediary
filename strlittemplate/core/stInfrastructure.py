@@ -45,12 +45,14 @@ def ColourCells(s, df, colName, flip=False):
     thisRow = pd.Series(data=False, index=s.index)
     # vailable colours: 9*x=5
     colours = ['red', 'blue', 'green', 'orange',
-               'purple''yellow', 'pink', 'lightblue', 'lightgreen']*5
+               'purple''yellow', 'pink', 'lightblue', 'lightgreen'] * 5
     names = list(df[colName].unique())
     if flip:
-        return ['background-color: %s ; color: %s' % ('white', colours[names.index(s[colName])])]*len(df.columns)
+        return ['background-color: %s ; color: %s' %
+                ('white', colours[names.index(s[colName])])] * len(df.columns)
     else:
-        return ['background-color: %s ; color: %s' % (colours[names.index(s[colName])], 'black')]*len(df.columns)
+        return ['background-color: %s ; color: %s' %
+                (colours[names.index(s[colName])], 'black')] * len(df.columns)
 
 ###
 # Info.
@@ -73,7 +75,7 @@ def ComponentInfo(user, comp):
         st.write(" - **not** found in user institutions")
     try:
         st.write(" * shipping destination:",
-                 comp['destination']['name'], "(id:"+comp['destination']['id']+")")
+                 comp['destination']['name'], "(id:" + comp['destination']['id'] + ")")
     except TypeError:
         st.write(" * no shipping destination found")
     st.write("when:*", comp['cts'], "*")
@@ -115,13 +117,13 @@ def TextBox(myDict, myKey, txt, pwd=False):
 
 def SelectBox(myDict, myKey, opts, txt, lamKey=None):
     if len(opts) < 1:
-        st.write("No options found for "+myKey)
+        st.write("No options found for " + myKey)
         st.stop()
     sortedOpts = opts
-    if type(opts[0]) != type({}) and type(opts[0]) != type([]):
+    if not isinstance(opts[0], type({})) and not isinstance(opts[0], type([])):
         sortedOpts = sorted(opts)
 
-    if lamKey == None:
+    if lamKey is None:
         try:
             myDict[myKey] = st.selectbox(
                 txt, sortedOpts, index=sortedOpts.index(myDict[myKey]))
@@ -131,7 +133,7 @@ def SelectBox(myDict, myKey, opts, txt, lamKey=None):
             myDict[myKey] = st.selectbox(txt, sortedOpts)
     else:
         # st.write("for",lamKey,"and",myDict[myKey],":",opts.index(myDict[myKey]))
-        if type(opts[0]) == type({}):
+        if isinstance(opts[0], type({})):
             sortedOpts = sorted(opts, key=lambda k: k[lamKey])
         try:
             myDict[myKey] = st.selectbox(
@@ -159,15 +161,15 @@ def SelectBoxDf(myDict, myKey, df, txt, colName):
         val = st.selectbox(txt, sortedOpts)
     except ValueError:
         val = st.selectbox(txt, sortedOpts)
-    myDict[myKey] = df.query(colName+'=="'+val+'"')
+    myDict[myKey] = df.query(colName + '=="' + val + '"')
 
 
 def MultiSelect(myDict, myKey, opts, txt):
     if len(opts) < 1:
-        st.write("No options found for "+myKey)
+        st.write("No options found for " + myKey)
         st.stop()
     sortedOpts = opts
-    if type(opts[0]) != type({}) and type(opts[0]) != type([]):
+    if not isinstance(opts[0], type({})) and not isinstance(opts[0], type([])):
         sortedOpts = sorted(opts)
     try:
         myDict[myKey] = st.multiselect(txt, sortedOpts, default=myDict[myKey])
@@ -181,10 +183,10 @@ def MultiSelect(myDict, myKey, opts, txt):
 
 def Radio(myDict, myKey, opts, txt):
     if len(opts) < 1:
-        st.write("No options found for "+myKey)
+        st.write("No options found for " + myKey)
         st.stop()
     sortedOpts = opts
-    if type(opts[0]) != type({}) and type(opts[0]) != type([]):
+    if not isinstance(opts[0], type({})) and not isinstance(opts[0], type([])):
         sortedOpts = sorted(opts)
     try:
         myDict[myKey] = st.radio(
